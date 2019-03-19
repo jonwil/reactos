@@ -7195,3 +7195,10 @@ HRESULT WINAPI D3DXDisassembleEffect(ID3DXEffect *effect, BOOL enable_color_code
 
     return D3DXERR_INVALIDDATA;
 }
+
+HRESULT WINAPI D3DXDumpEffectFileA(ID3DXEffect *effect, const char *filename)
+{
+	FIXME("(%p, %s): stub\n", effect, filename);
+
+	return D3DXERR_INVALIDDATA;
+}
