@@ -7196,9 +7196,1882 @@ HRESULT WINAPI D3DXDisassembleEffect(ID3DXEffect *effect, BOOL enable_color_code
     return D3DXERR_INVALIDDATA;
 }
 
+struct StateValue
+{
+	const char *name;
+	unsigned int value;
+};
+struct State
+{
+	const char *name;
+	struct StateValue *values;
+};
+struct StateValue ZENABLEval[] =
+{
+{"TRUE",1},
+{"FALSE",0},
+{"USEW",2},
+{NULL,0},
+};
+struct StateValue FILLMODEval[] =
+{
+{"POINT",1},
+{"WIREFRAME",2},
+{"SOLID",3},
+{NULL,0},
+};
+struct StateValue SHADEMODEval[] =
+{
+{"FLAT",1},
+{"GOURAUD",2},
+{"PHONG",3},
+{NULL,0},
+};
+struct StateValue ZWRITEENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue ALPHATESTENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue LASTPIXELval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue SRCBLENDval[] =
+{
+{"ZERO",1},
+{"ONE",2},
+{"SRCCOLOR",3},
+{"INVSRCCOLOR",4},
+{"SRCALPHA",5},
+{"INVSRCALPHA",6},
+{"DESTALPHA",7},
+{"INVDESTALPHA",8},
+{"DESTCOLOR",9},
+{"INVDESTCOLOR",10},
+{"SRCALPHASAT",11},
+{"BOTHSRCALPHA",12},
+{"BOTHINVSRCALPHA",13},
+{"BLENDFACTOR",14},
+{"INVBLENDFACTOR",15},
+{NULL,0},
+};
+struct StateValue DESTBLENDval[] =
+{
+{"ZERO",1},
+{"ONE",2},
+{"SRCCOLOR",3},
+{"INVSRCCOLOR",4},
+{"SRCALPHA",5},
+{"INVSRCALPHA",6},
+{"DESTALPHA",7},
+{"INVDESTALPHA",8},
+{"DESTCOLOR",9},
+{"INVDESTCOLOR",10},
+{"SRCALPHASAT",11},
+{"BOTHSRCALPHA",12},
+{"BOTHINVSRCALPHA",13},
+{"BLENDFACTOR",14},
+{"INVBLENDFACTOR",15},
+{NULL,0},
+};
+struct StateValue CULLMODEval[] =
+{
+{"NONE",1},
+{"CW",2},
+{"CCW",3},
+{NULL,0},
+};
+struct StateValue ZFUNCval[] =
+{
+{"NEVER",1},
+{"LESS",2},
+{"EQUAL",3},
+{"LESSEQUAL",4},
+{"GREATER",5},
+{"NOTEQUAL",6},
+{"GREATEREQUAL",7},
+{"ALWAYS",8},
+{NULL,0},
+};
+struct StateValue ALPHAFUNCval[] =
+{
+{"NEVER",1},
+{"LESS",2},
+{"EQUAL",3},
+{"LESSEQUAL",4},
+{"GREATER",5},
+{"NOTEQUAL",6},
+{"GREATEREQUAL",7},
+{"ALWAYS",8},
+{NULL,0},
+};
+struct StateValue DITHERENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue ALPHABLENDENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue FOGENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue SPECULARENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue FOGTABLEMODEval[] =
+{
+{"NONE",0},
+{"EXP",1},
+{"EXP2",2},
+{"LINEAR",3},
+{NULL,0},
+};
+struct StateValue RANGEFOGENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue STENCILENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue STENCILFAILval[] =
+{
+{"KEEP",1},
+{"ZERO",2},
+{"REPLACE",3},
+{"INCRSAT",4},
+{"DECRSAT",5},
+{"INVERT",6},
+{"INCR",7},
+{"DECR",8},
+{NULL,0},
+};
+struct StateValue STENCILZFAILval[] =
+{
+{"KEEP",1},
+{"ZERO",2},
+{"REPLACE",3},
+{"INCRSAT",4},
+{"DECRSAT",5},
+{"INVERT",6},
+{"INCR",7},
+{"DECR",8},
+{NULL,0},
+};
+struct StateValue STENCILPASSval[] =
+{
+{"KEEP",1},
+{"ZERO",2},
+{"REPLACE",3},
+{"INCRSAT",4},
+{"DECRSAT",5},
+{"INVERT",6},
+{"INCR",7},
+{"DECR",8},
+{NULL,0},
+};
+struct StateValue STENCILFUNCval[] =
+{
+{"NEVER",1},
+{"LESS",2},
+{"EQUAL",3},
+{"LESSEQUAL",4},
+{"GREATER",5},
+{"NOTEQUAL",6},
+{"GREATEREQUAL",7},
+{"ALWAYS",8},
+{NULL,0},
+};
+struct StateValue WRAP0val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP1val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP2val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP3val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP4val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP5val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP6val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP7val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP8val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP9val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP10val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP11val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP12val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP13val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP14val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue WRAP15val[] =
+{
+{"U",1},
+{"V",2},
+{"W",4},
+{"COORD0",1},
+{"COORD1",2},
+{"COORD2",4},
+{"COORD3",8},
+{NULL,0},
+};
+struct StateValue CLIPPINGval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue LIGHTINGval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue FOGVERTEXMODEval[] =
+{
+{"NONE",0},
+{"EXP",1},
+{"EXP2",2},
+{"LINEAR",3},
+{NULL,0},
+};
+struct StateValue COLORVERTEXval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue LOCALVIEWERval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue NORMALIZENORMALSval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue DIFFUSEMATERIALSOURCEval[] =
+{
+{"MATERIAL",0},
+{"COLOR1",1},
+{"COLOR2",2},
+{NULL,0},
+};
+struct StateValue SPECULARMATERIALSOURCEval[] =
+{
+{"MATERIAL",0},
+{"COLOR1",1},
+{"COLOR2",2},
+{NULL,0},
+};
+struct StateValue AMBIENTMATERIALSOURCEval[] =
+{
+{"MATERIAL",0},
+{"COLOR1",1},
+{"COLOR2",2},
+{NULL,0},
+};
+struct StateValue EMISSIVEMATERIALSOURCEval[] =
+{
+{"MATERIAL",0},
+{"COLOR1",1},
+{"COLOR2",2},
+{NULL,0},
+};
+struct StateValue VERTEXBLENDval[] =
+{
+{"DISABLE",0},
+{"0WEIGHTS",256},
+{"1WEIGHTS",1},
+{"2WEIGHTS",2},
+{"3WEIGHTS",3},
+{"TWEENING",255},
+{NULL,0},
+};
+struct StateValue CLIPPLANEENABLEval[] =
+{
+{"CLIPPLANE0",1},
+{"CLIPPLANE1",2},
+{"CLIPPLANE2",4},
+{"CLIPPLANE3",8},
+{"CLIPPLANE4",16},
+{"CLIPPLANE5",32},
+{NULL,0},
+};
+struct StateValue POINTSPRITEENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue POINTSCALEENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue MULTISAMPLEANTIALIASval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue PATCHEDGESTYLEval[] =
+{
+{"DISCRETE",0},
+{"CONTINUOUS",1},
+{NULL,0},
+};
+struct StateValue INDEXEDVERTEXBLENDENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue COLORWRITEENABLEval[] =
+{
+{"RED",1},
+{"GREEN",2},
+{"BLUE",4},
+{"ALPHA",8},
+{NULL,0},
+};
+struct StateValue BLENDOPval[] =
+{
+{"ADD",1},
+{"SUBTRACT",2},
+{"REVSUBTRACT",3},
+{"MIN",4},
+{"MAX",5},
+{NULL,0},
+};
+struct StateValue POSITIONDEGREEval[] =
+{
+{"LINEAR",1},
+{"QUADRATIC",2},
+{"CUBIC",3},
+{"QUINTIC",5},
+{NULL,0},
+};
+struct StateValue NORMALDEGREEval[] =
+{
+{"LINEAR",1},
+{"QUADRATIC",2},
+{"CUBIC",3},
+{"QUINTIC",5},
+{NULL,0},
+};
+struct StateValue SCISSORTESTENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue ANTIALIASEDLINEENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue ENABLEADAPTIVETESSELLATIONval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue TWOSIDEDSTENCILMODEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue CCW_STENCILFAILval[] =
+{
+{"KEEP",1},
+{"ZERO",2},
+{"REPLACE",3},
+{"INCRSAT",4},
+{"DECRSAT",5},
+{"INVERT",6},
+{"INCR",7},
+{"DECR",8},
+{NULL,0},
+};
+struct StateValue CCW_STENCILZFAILval[] =
+{
+{"KEEP",1},
+{"ZERO",2},
+{"REPLACE",3},
+{"INCRSAT",4},
+{"DECRSAT",5},
+{"INVERT",6},
+{"INCR",7},
+{"DECR",8},
+{NULL,0},
+};
+struct StateValue CCW_STENCILPASSval[] =
+{
+{"KEEP",1},
+{"ZERO",2},
+{"REPLACE",3},
+{"INCRSAT",4},
+{"DECRSAT",5},
+{"INVERT",6},
+{"INCR",7},
+{"DECR",8},
+{NULL,0},
+};
+struct StateValue CCW_STENCILFUNCval[] =
+{
+{"NEVER",1},
+{"LESS",2},
+{"EQUAL",3},
+{"LESSEQUAL",4},
+{"GREATER",5},
+{"NOTEQUAL",6},
+{"GREATEREQUAL",7},
+{"ALWAYS",8},
+{NULL,0},
+};
+struct StateValue COLORWRITEENABLE1val[] =
+{
+{"RED",1},
+{"GREEN",2},
+{"BLUE",4},
+{"ALPHA",8},
+{NULL,0},
+};
+struct StateValue COLORWRITEENABLE2val[] =
+{
+{"RED",1},
+{"GREEN",2},
+{"BLUE",4},
+{"ALPHA",8},
+{NULL,0},
+};
+struct StateValue COLORWRITEENABLE3val[] =
+{
+{"RED",1},
+{"GREEN",2},
+{"BLUE",4},
+{"ALPHA",8},
+{NULL,0},
+};
+struct StateValue SRGBWRITEENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue SEPARATEALPHABLENDENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue SRCBLENDALPHAval[] =
+{
+{"ZERO",1},
+{"ONE",2},
+{"SRCALPHA",5},
+{"INVSRCALPHA",6},
+{"DESTALPHA",7},
+{"INVDESTALPHA",8},
+{"SRCALPHASAT",11},
+{"BLENDFACTOR",14},
+{"INVBLENDFACTOR",15},
+{NULL,0},
+};
+struct StateValue DESTBLENDALPHAval[] =
+{
+{"ZERO",1},
+{"ONE",2},
+{"SRCALPHA",5},
+{"INVSRCALPHA",6},
+{"DESTALPHA",7},
+{"INVDESTALPHA",8},
+{"SRCALPHASAT",11},
+{"BLENDFACTOR",14},
+{"INVBLENDFACTOR",15},
+{NULL,0},
+};
+struct StateValue BLENDOPALPHAval[] =
+{
+{"ADD",1},
+{"SUBTRACT",2},
+{"REVSUBTRACT",3},
+{"MIN",4},
+{"MAX",5},
+{NULL,0},
+};
+struct StateValue COLOROPval[] =
+{
+{"DISABLE",1},
+{"SELECTARG1",2},
+{"SELECTARG2",3},
+{"MODULATE",4},
+{"MODULATE2X",5},
+{"MODULATE4X",6},
+{"ADD",7},
+{"ADDSIGNED",8},
+{"ADDSIGNED2X",9},
+{"SUBTRACT",10},
+{"ADDSMOOTH",11},
+{"BLENDDIFFUSEALPHA",12},
+{"BLENDTEXTUREALPHA",13},
+{"BLENDFACTORALPHA",14},
+{"BLENDTEXTUREALPHAPM",15},
+{"BLENDCURRENTALPHA",16},
+{"PREMODULATE",17},
+{"MODULATEALPHA_ADDCOLOR",18},
+{"MODULATECOLOR_ADDALPHA",19},
+{"MODULATEINVALPHA_ADDCOLOR",20},
+{"MODULATEINVCOLOR_ADDALPHA",21},
+{"BUMPENVMAP",22},
+{"BUMPENVMAPLUMINANCE",23},
+{"DOTPRODUCT3",24},
+{"MULTIPLYADD",25},
+{"LERP",26},
+{NULL,0},
+};
+struct StateValue COLORARG0val[] =
+{
+{"SELECTMASK",15},
+{"DIFFUSE",0},
+{"CURRENT",1},
+{"TEXTURE",2},
+{"TFACTOR",3},
+{"SPECULAR",4},
+{"TEMP",5},
+{"CONSTANT",6},
+{"COMPLEMENT",16},
+{"ALPHAREPLICATE",32},
+{NULL,0},
+};
+struct StateValue COLORARG1val[] =
+{
+{"SELECTMASK",15},
+{"DIFFUSE",0},
+{"CURRENT",1},
+{"TEXTURE",2},
+{"TFACTOR",3},
+{"SPECULAR",4},
+{"TEMP",5},
+{"CONSTANT",6},
+{"COMPLEMENT",16},
+{"ALPHAREPLICATE",32},
+{NULL,0},
+};
+struct StateValue COLORARG2val[] =
+{
+{"SELECTMASK",15},
+{"DIFFUSE",0},
+{"CURRENT",1},
+{"TEXTURE",2},
+{"TFACTOR",3},
+{"SPECULAR",4},
+{"TEMP",5},
+{"CONSTANT",6},
+{"COMPLEMENT",16},
+{"ALPHAREPLICATE",32},
+{NULL,0},
+};
+struct StateValue ALPHAOPval[] =
+{
+{"DISABLE",1},
+{"SELECTARG1",2},
+{"SELECTARG2",3},
+{"MODULATE",4},
+{"MODULATE2X",5},
+{"MODULATE4X",6},
+{"ADD",7},
+{"ADDSIGNED",8},
+{"ADDSIGNED2X",9},
+{"SUBTRACT",10},
+{"ADDSMOOTH",11},
+{"BLENDDIFFUSEALPHA",12},
+{"BLENDTEXTUREALPHA",13},
+{"BLENDFACTORALPHA",14},
+{"BLENDTEXTUREALPHAPM",15},
+{"BLENDCURRENTALPHA",16},
+{"PREMODULATE",17},
+{"MODULATEALPHA_ADDCOLOR",18},
+{"MODULATECOLOR_ADDALPHA",19},
+{"MODULATEINVALPHA_ADDCOLOR",20},
+{"MODULATEINVCOLOR_ADDALPHA",21},
+{"BUMPENVMAP",22},
+{"BUMPENVMAPLUMINANCE",23},
+{"DOTPRODUCT3",24},
+{"MULTIPLYADD",25},
+{"LERP",26},
+{NULL,0},
+};
+struct StateValue ALPHAARG0val[] =
+{
+{"SELECTMASK",15},
+{"DIFFUSE",0},
+{"CURRENT",1},
+{"TEXTURE",2},
+{"TFACTOR",3},
+{"SPECULAR",4},
+{"TEMP",5},
+{"CONSTANT",6},
+{"COMPLEMENT",16},
+{"ALPHAREPLICATE",32},
+{NULL,0},
+};
+struct StateValue ALPHAARG1val[] =
+{
+{"SELECTMASK",15},
+{"DIFFUSE",0},
+{"CURRENT",1},
+{"TEXTURE",2},
+{"TFACTOR",3},
+{"SPECULAR",4},
+{"TEMP",5},
+{"CONSTANT",6},
+{"COMPLEMENT",16},
+{"ALPHAREPLICATE",32},
+{NULL,0},
+};
+struct StateValue ALPHAARG2val[] =
+{
+{"SELECTMASK",15},
+{"DIFFUSE",0},
+{"CURRENT",1},
+{"TEXTURE",2},
+{"TFACTOR",3},
+{"SPECULAR",4},
+{"TEMP",5},
+{"CONSTANT",6},
+{"COMPLEMENT",16},
+{"ALPHAREPLICATE",32},
+{NULL,0},
+};
+struct StateValue RESULTARGval[] =
+{
+{"SELECTMASK",15},
+{"DIFFUSE",0},
+{"CURRENT",1},
+{"TEXTURE",2},
+{"TFACTOR",3},
+{"SPECULAR",4},
+{"TEMP",5},
+{"CONSTANT",6},
+{"COMPLEMENT",16},
+{"ALPHAREPLICATE",32},
+{NULL,0},
+};
+struct StateValue TEXCOORDINDEXval[] =
+{
+{"PASSTHRU",0},
+{"CAMERASPACENORMAL",65536},
+{"CAMERASPACEPOSITION",131072},
+{"CAMERASPACEREFLECTIONVECTOR",196608},
+{"SPHEREMAP",262144},
+{NULL,0},
+};
+struct StateValue TEXTURETRANSFORMFLAGSval[] =
+{
+{"FALSE",0},
+{"DISABLE",0},
+{"COUNT1",1},
+{"COUNT2",2},
+{"COUNT3",3},
+{"COUNT4",4},
+{"PROJECTED",256},
+{NULL,0},
+};
+struct StateValue FVFval[] =
+{
+{"NULL",0},
+{"XYZ",2},
+{"XYZRHW",4},
+{"XYZB1",6},
+{"XYZB2",8},
+{"XYZB3",10},
+{"XYZB4",12},
+{"XYZB5",14},
+{"XYZW",16386},
+{"LASTBETA_UBYTE4",4096},
+{"LASTBETA_D3DCOLOR",32768},
+{"NORMAL",16},
+{"PSIZE",32},
+{"DIFFUSE",64},
+{"SPECULAR",128},
+{"TEX0",0},
+{"TEX1",256},
+{"TEX2",512},
+{"TEX3",768},
+{"TEX4",1024},
+{"TEX5",1280},
+{"TEX6",1536},
+{"TEX7",1792},
+{"TEX8",2048},
+{"TEXCOORDSIZE1_0",196608},
+{"TEXCOORDSIZE1_1",786432},
+{"TEXCOORDSIZE1_2",3145728},
+{"TEXCOORDSIZE1_3",12582912},
+{"TEXCOORDSIZE1_4",50331648},
+{"TEXCOORDSIZE1_5",201326592},
+{"TEXCOORDSIZE1_6",805306368},
+{"TEXCOORDSIZE1_7",3221225472},
+{"TEXCOORDSIZE2_0",0},
+{"TEXCOORDSIZE2_1",0},
+{"TEXCOORDSIZE2_2",0},
+{"TEXCOORDSIZE2_3",0},
+{"TEXCOORDSIZE2_4",0},
+{"TEXCOORDSIZE2_5",0},
+{"TEXCOORDSIZE2_6",0},
+{"TEXCOORDSIZE2_7",0},
+{"TEXCOORDSIZE3_0",65536},
+{"TEXCOORDSIZE3_1",262144},
+{"TEXCOORDSIZE3_2",1048576},
+{"TEXCOORDSIZE3_3",4194304},
+{"TEXCOORDSIZE3_4",16777216},
+{"TEXCOORDSIZE3_5",67108864},
+{"TEXCOORDSIZE3_6",268435456},
+{"TEXCOORDSIZE3_7",1073741824},
+{"TEXCOORDSIZE4_0",131072},
+{"TEXCOORDSIZE4_1",524288},
+{"TEXCOORDSIZE4_2",2097152},
+{"TEXCOORDSIZE4_3",8388608},
+{"TEXCOORDSIZE4_4",33554432},
+{"TEXCOORDSIZE4_5",134217728},
+{"TEXCOORDSIZE4_6",536870912},
+{"TEXCOORDSIZE4_7",2147483648},
+{NULL,0},
+};
+struct StateValue LIGHTTYPEval[] =
+{
+{"POINT",1}	,
+{"SPOT",2},
+{"DIRECTIONAL",3},
+{NULL,0},
+};
+struct StateValue LIGHTENABLEval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue VERTEXSHADERval[] =
+{
+{"NULL",0},
+{"XYZ",2},
+{"XYZRHW",4},
+{"XYZB1",6},
+{"XYZB2",8},
+{"XYZB3",10},
+{"XYZB4",12},
+{"XYZB5",14},
+{"XYZW",16386},
+{"LASTBETA_UBYTE4",4096},
+{"LASTBETA_D3DCOLOR",32768},
+{"NORMAL",16},
+{"PSIZE",32},
+{"DIFFUSE",64},
+{"SPECULAR",128},
+{"TEX0",0},
+{"TEX1",256},
+{"TEX2",512},
+{"TEX3",768},
+{"TEX4",1024},
+{"TEX5",1280},
+{"TEX6",1536},
+{"TEX7",1792},
+{"TEX8",2048},
+{"TEXCOORDSIZE1_0",196608},
+{"TEXCOORDSIZE1_1",786432},
+{"TEXCOORDSIZE1_2",3145728},
+{"TEXCOORDSIZE1_3",12582912},
+{"TEXCOORDSIZE1_4",50331648},
+{"TEXCOORDSIZE1_5",201326592},
+{"TEXCOORDSIZE1_6",805306368},
+{"TEXCOORDSIZE1_7",3221225472},
+{"TEXCOORDSIZE2_0",0},
+{"TEXCOORDSIZE2_1",0},
+{"TEXCOORDSIZE2_2",0},
+{"TEXCOORDSIZE2_3",0},
+{"TEXCOORDSIZE2_4",0},
+{"TEXCOORDSIZE2_5",0},
+{"TEXCOORDSIZE2_6",0},
+{"TEXCOORDSIZE2_7",0},
+{"TEXCOORDSIZE3_0",65536},
+{"TEXCOORDSIZE3_1",262144},
+{"TEXCOORDSIZE3_2",1048576},
+{"TEXCOORDSIZE3_3",4194304},
+{"TEXCOORDSIZE3_4",16777216},
+{"TEXCOORDSIZE3_5",67108864},
+{"TEXCOORDSIZE3_6",268435456},
+{"TEXCOORDSIZE3_7",1073741824},
+{"TEXCOORDSIZE4_0",131072},
+{"TEXCOORDSIZE4_1",524288},
+{"TEXCOORDSIZE4_2",2097152},
+{"TEXCOORDSIZE4_3",8388608},
+{"TEXCOORDSIZE4_4",33554432},
+{"TEXCOORDSIZE4_5",134217728},
+{"TEXCOORDSIZE4_6",536870912},
+{"TEXCOORDSIZE4_7",2147483648},
+{NULL,0},
+};
+struct StateValue PIXELSHADERval[] =
+{
+{"NULL",0},
+{NULL,0},
+};
+struct StateValue VERTEXSHADERCONSTANTBval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue PIXELSHADERCONSTANTBval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue TEXTUREval[] =
+{
+{"NULL",0},
+{NULL,0},
+};
+struct StateValue ADDRESSUval[] =
+{
+{"CLAMP",3},
+{"WRAP",1},
+{"MIRROR",2},
+{"BORDER",4},
+{"MIRRORONCE",5},
+{NULL,0},
+};
+struct StateValue ADDRESSVval[] =
+{
+{"CLAMP",3},
+{"WRAP",1},
+{"MIRROR",2},
+{"BORDER",4},
+{"MIRRORONCE",5},
+{NULL,0},
+};
+struct StateValue ADDRESSWval[] =
+{
+{"CLAMP",3},
+{"WRAP",1},
+{"MIRROR",2},
+{"BORDER",4},
+{"MIRRORONCE",5},
+{NULL,0},
+};
+struct StateValue MAGFILTERval[] =
+{
+{"POINT",1},
+{"NONE",0},
+{"LINEAR",2},
+{"ANISOTROPIC",3},
+{"PYRAMIDALQUAD",6},
+{"GAUSSIANQUAD",7},
+{NULL,0},
+};
+struct StateValue MINFILTERval[] =
+{
+{"POINT",1},
+{"NONE",0},
+{"LINEAR",2},
+{"ANISOTROPIC",3},
+{"PYRAMIDALQUAD",6},
+{"GAUSSIANQUAD",7},
+{NULL,0},
+};
+struct StateValue MIPFILTERval[] =
+{
+{"POINT",1},
+{"NONE",0},
+{"LINEAR",2},
+{"ANISOTROPIC",3},
+{"PYRAMIDALQUAD",6},
+{"GAUSSIANQUAD",7},
+{NULL,0},
+};
+struct StateValue SRGBTEXTUREval[] =
+{
+{"FALSE",0},
+{"TRUE",1},
+{NULL,0},
+};
+struct StateValue SAMPLERval[] =
+{
+{"NULL",0},
+{NULL,0},
+};
+struct StateValue STATEBLOCKval[] =
+{
+{"NULL",0},
+{NULL,0},
+};
+struct State states[] =
+{
+{"ZENABLE",ZENABLEval},
+{"FILLMODE",FILLMODEval},
+{"SHADEMODE",SHADEMODEval},
+{"ZWRITEENABLE",ZWRITEENABLEval},
+{"ALPHATESTENABLE",ALPHATESTENABLEval},
+{"LASTPIXEL",LASTPIXELval},
+{"SRCBLEND",SRCBLENDval},
+{"DESTBLEND",DESTBLENDval},
+{"CULLMODE",CULLMODEval},
+{"ZFUNC",ZFUNCval},
+{"ALPHAREF",NULL},
+{"ALPHAFUNC",ALPHAFUNCval},
+{"DITHERENABLE",DITHERENABLEval},
+{"ALPHABLENDENABLE",ALPHABLENDENABLEval},
+{"FOGENABLE",FOGENABLEval},
+{"SPECULARENABLE",SPECULARENABLEval},
+{"FOGCOLOR",NULL},
+{"FOGTABLEMODE",FOGTABLEMODEval},
+{"FOGSTART",NULL},
+{"FOGEND",NULL},
+{"FOGDENSITY",NULL},
+{"RANGEFOGENABLE",RANGEFOGENABLEval},
+{"STENCILENABLE",STENCILENABLEval},
+{"STENCILFAIL",STENCILFAILval},
+{"STENCILZFAIL",STENCILZFAILval},
+{"STENCILPASS",STENCILPASSval},
+{"STENCILFUNC",STENCILFUNCval},
+{"STENCILREF",NULL},
+{"STENCILMASK",NULL},
+{"STENCILWRITEMASK",NULL},
+{"TEXTUREFACTOR",NULL},
+{"WRAP0",WRAP0val},
+{"WRAP1",WRAP1val},
+{"WRAP2",WRAP2val},
+{"WRAP3",WRAP3val},
+{"WRAP4",WRAP4val},
+{"WRAP5",WRAP5val},
+{"WRAP6",WRAP6val},
+{"WRAP7",WRAP7val},
+{"WRAP8",WRAP8val},
+{"WRAP9",WRAP9val},
+{"WRAP10",WRAP10val},
+{"WRAP11",WRAP11val},
+{"WRAP12",WRAP12val},
+{"WRAP13",WRAP13val},
+{"WRAP14",WRAP14val},
+{"WRAP15",WRAP15val},
+{"CLIPPING",CLIPPINGval},
+{"LIGHTING",LIGHTINGval},
+{"AMBIENT",NULL},
+{"FOGVERTEXMODE",FOGVERTEXMODEval},
+{"COLORVERTEX",COLORVERTEXval},
+{"LOCALVIEWER",LOCALVIEWERval},
+{"NORMALIZENORMALS",NORMALIZENORMALSval},
+{"DIFFUSEMATERIALSOURCE",DIFFUSEMATERIALSOURCEval},
+{"SPECULARMATERIALSOURCE",SPECULARMATERIALSOURCEval},
+{"AMBIENTMATERIALSOURCE",AMBIENTMATERIALSOURCEval},
+{"EMISSIVEMATERIALSOURCE",EMISSIVEMATERIALSOURCEval},
+{"VERTEXBLEND",VERTEXBLENDval},
+{"CLIPPLANEENABLE",CLIPPLANEENABLEval},
+{"POINTSIZE",NULL},
+{"POINTSIZE_MIN",NULL},
+{"POINTSIZE_MAX",NULL},
+{"POINTSPRITEENABLE",POINTSPRITEENABLEval},
+{"POINTSCALEENABLE",POINTSCALEENABLEval},
+{"POINTSCALE_A",NULL},
+{"POINTSCALE_B",NULL},
+{"POINTSCALE_C",NULL},
+{"MULTISAMPLEANTIALIAS",MULTISAMPLEANTIALIASval},
+{"MULTISAMPLEMASK",NULL},
+{"PATCHEDGESTYLE",PATCHEDGESTYLEval},
+{"DEBUGMONITORTOKEN",NULL},
+{"INDEXEDVERTEXBLENDENABLE",INDEXEDVERTEXBLENDENABLEval},
+{"COLORWRITEENABLE",COLORWRITEENABLEval},
+{"TWEENFACTOR",NULL},
+{"BLENDOP",BLENDOPval},
+{"POSITIONDEGREE",POSITIONDEGREEval},
+{"NORMALDEGREE",NORMALDEGREEval},
+{"SCISSORTESTENABLE",SCISSORTESTENABLEval},
+{"SLOPESCALEDEPTHBIAS",NULL},
+{"ANTIALIASEDLINEENABLE",ANTIALIASEDLINEENABLEval},
+{"MINTESSELLATIONLEVEL",NULL},
+{"MAXTESSELLATIONLEVEL",NULL},
+{"ADAPTIVETESS_X",NULL},
+{"ADAPTIVETESS_Y",NULL},
+{"ADAPTIVETESS_Z",NULL},
+{"ADAPTIVETESS_W",NULL},
+{"ENABLEADAPTIVETESSELLATION",ENABLEADAPTIVETESSELLATIONval},
+{"TWOSIDEDSTENCILMODE",TWOSIDEDSTENCILMODEval},
+{"CCW_STENCILFAIL",CCW_STENCILFAILval},
+{"CCW_STENCILZFAIL",CCW_STENCILZFAILval},
+{"CCW_STENCILPASS",CCW_STENCILPASSval},
+{"CCW_STENCILFUNC",CCW_STENCILFUNCval},
+{"COLORWRITEENABLE1",COLORWRITEENABLE1val},
+{"COLORWRITEENABLE2",COLORWRITEENABLE2val},
+{"COLORWRITEENABLE3",COLORWRITEENABLE3val},
+{"BLENDFACTOR",NULL},
+{"SRGBWRITEENABLE",SRGBWRITEENABLEval},
+{"DEPTHBIAS",NULL},
+{"SEPARATEALPHABLENDENABLE",SEPARATEALPHABLENDENABLEval},
+{"SRCBLENDALPHA",SRCBLENDALPHAval},
+{"DESTBLENDALPHA",DESTBLENDALPHAval},
+{"BLENDOPALPHA",BLENDOPALPHAval},
+{"COLOROP",COLOROPval},
+{"COLORARG0",COLORARG0val},
+{"COLORARG1",COLORARG1val},
+{"COLORARG2",COLORARG2val},
+{"ALPHAOP",ALPHAOPval},
+{"ALPHAARG0",ALPHAARG0val},
+{"ALPHAARG1",ALPHAARG1val},
+{"ALPHAARG2",ALPHAARG2val},
+{"RESULTARG",RESULTARGval},
+{"BUMPENVMAT00",NULL},
+{"BUMPENVMAT01",NULL},
+{"BUMPENVMAT10",NULL},
+{"BUMPENVMAT11",NULL},
+{"TEXCOORDINDEX",TEXCOORDINDEXval},
+{"BUMPENVLSCALE",NULL},
+{"BUMPENVLOFFSET",NULL},
+{"TEXTURETRANSFORMFLAGS",TEXTURETRANSFORMFLAGSval},
+{"CONSTANT",NULL},
+{"PATCHSEGMENTS",NULL},
+{"FVF",FVFval},
+{"PROJECTIONTRANSFORM",NULL},
+{"VIEWTRANSFORM",NULL},
+{"WORLDTRANSFORM",NULL},
+{"TEXTURETRANSFORM",NULL},
+{"MATERIALDIFFUSE",NULL},
+{"MATERIALAMBIENT",NULL},
+{"MATERIALSPECULAR",NULL},
+{"MATERIALEMISSIVE",NULL},
+{"MATERIALPOWER",NULL},
+{"LIGHTTYPE",LIGHTTYPEval},
+{"LIGHTDIFFUSE",NULL},
+{"LIGHTSPECULAR",NULL},
+{"LIGHTAMBIENT",NULL},
+{"LIGHTPOSITION",NULL},
+{"LIGHTDIRECTION",NULL},
+{"LIGHTRANGE",NULL},
+{"LIGHTFALLOFF",NULL},
+{"LIGHTATTENUATION0",NULL},
+{"LIGHTATTENUATION1",NULL},
+{"LIGHTATTENUATION2",NULL},
+{"LIGHTTHETA",NULL},
+{"LIGHTPHI",NULL},
+{"LIGHTENABLE",LIGHTENABLEval},
+{"VERTEXSHADER",VERTEXSHADERval},
+{"PIXELSHADER",PIXELSHADERval},
+{"VERTEXSHADERCONSTANTF",NULL},
+{"VERTEXSHADERCONSTANTB",VERTEXSHADERCONSTANTBval},
+{"VERTEXSHADERCONSTANTI",NULL},
+{"VERTEXSHADERCONSTANT",NULL},
+{"VERTEXSHADERCONSTANT1",NULL},
+{"VERTEXSHADERCONSTANT2",NULL},
+{"VERTEXSHADERCONSTANT3",NULL},
+{"VERTEXSHADERCONSTANT4",NULL},
+{"PIXELSHADERCONSTANTF",NULL},
+{"PIXELSHADERCONSTANTB",PIXELSHADERCONSTANTBval},
+{"PIXELSHADERCONSTANTI",NULL},
+{"PIXELSHADERCONSTANT",NULL},
+{"PIXELSHADERCONSTANT1",NULL},
+{"PIXELSHADERCONSTANT2",NULL},
+{"PIXELSHADERCONSTANT3",NULL},
+{"PIXELSHADERCONSTANT4",NULL},
+{"TEXTURE",TEXTUREval},
+{"ADDRESSU",ADDRESSUval},
+{"ADDRESSV",ADDRESSVval},
+{"ADDRESSW",ADDRESSWval},
+{"BORDERCOLOR",NULL},
+{"MAGFILTER",MAGFILTERval},
+{"MINFILTER",MINFILTERval},
+{"MIPFILTER",MIPFILTERval},
+{"MIPMAPLODBIAS",NULL},
+{"MAXMIPLEVEL",NULL},
+{"MAXANISOTROPY",NULL},
+{"SRGBTEXTURE",SRGBTEXTUREval},
+{"ELEMENTINDEX",NULL},
+{"DMAPOFFSET",NULL},
+{"SAMPLER",SAMPLERval},
+{"STATEBLOCK",STATEBLOCKval},
+{"$PRESHADER_VS",NULL},
+{"$PRESHADER_PS",NULL},
+{NULL,0},
+};
+
+void DumpState(struct d3dx_state *state, FILE *f)
+{
+	unsigned int data;
+	struct StateValue *values;
+	switch (state->type)
+	{
+	case ST_CONSTANT:
+		switch (state->parameter.type)
+		{
+		case D3DXPT_VERTEXSHADER:
+			if (state->parameter.class == D3DXPC_OBJECT)
+			{
+				fprintf(f, "%s = (unable to dump vertex shader data at this time);\n", states[state->operation].name);
+			}
+			else
+			{
+				__debugbreak();
+			}
+			break;
+		case D3DXPT_PIXELSHADER:
+			if (state->parameter.class == D3DXPC_OBJECT)
+			{
+				fprintf(f, "%s = (unable to dump pixel shader data at this time);\n", states[state->operation].name);
+			}
+			else
+			{
+				__debugbreak();
+			}
+			break;
+		case D3DXPT_INT:
+			if (state->parameter.class == D3DXPC_MATRIX_ROWS && state->parameter.rows == 1 && state->parameter.columns == 1)
+			{
+				data = *(unsigned int *)state->parameter.data;
+				if (states[state->operation].values)
+				{
+					values = states[state->operation].values;
+					while (values->name)
+					{
+						if (values->value == data)
+						{
+							fprintf(f, "%s = %s;\n", states[state->operation].name, values->name);
+							break;
+						}
+						values++;
+					}
+				}
+				else
+				{
+					fprintf(f, "%s = %d;\n", states[state->operation].name, data);
+				}
+			}
+			else
+			{
+				__debugbreak();
+			}
+			break;
+		case D3DXPT_BOOL:
+			if (state->parameter.class == D3DXPC_MATRIX_ROWS && state->parameter.rows == 1 && state->parameter.columns == 1)
+			{
+				if (*((int *)state->parameter.data) == 0)
+				{
+					fprintf(f, "%s = false;\n", states[state->operation].name);
+				}
+				else
+				{
+					fprintf(f, "%s = true;\n", states[state->operation].name);
+				}
+			}
+			else
+			{
+				__debugbreak();
+			}
+			break;
+		case D3DXPT_FLOAT:
+			if (state->parameter.class == D3DXPC_MATRIX_ROWS && state->parameter.rows == 1 && state->parameter.columns == 1)
+			{
+				fprintf(f, "%s = %f;\n", states[state->operation].name, *(float *)state->parameter.data);
+			}
+			else
+			{
+				__debugbreak();
+			}
+			break;
+		default:
+			__debugbreak();
+			break;
+		}
+		break;
+	case ST_PARAMETER:
+		if (state->referenced_param)
+		{
+			if ((state->referenced_param->type == D3DXPT_TEXTURE) && (state->referenced_param->class == D3DXPC_OBJECT))
+			{
+				fprintf(f, "%s = < %s >;\n", states[state->operation].name, state->referenced_param->name);
+			}
+			else if ((state->referenced_param->type == D3DXPT_VERTEXSHADER) && (state->referenced_param->class == D3DXPC_OBJECT))
+			{
+				fprintf(f, "%s = < %s >; (this may not be correct)\n", states[state->operation].name, state->referenced_param->name);
+			}
+			else if ((state->referenced_param->type == D3DXPT_PIXELSHADER) && (state->referenced_param->class == D3DXPC_OBJECT))
+			{
+				fprintf(f, "%s = < %s >; (this may not be correct)\n", states[state->operation].name, state->referenced_param->name);
+			}
+			else
+			{
+				__debugbreak();
+			}
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case ST_FXLC:
+		fprintf(f, "%s = ( (unable to dump preshader data at this time) );\n", states[state->operation].name);
+		break;
+	case ST_ARRAY_SELECTOR:
+		fprintf(f, "%s = ( %s[(unable to dump preshader data at this time)] );\n", states[state->operation].name, state->referenced_param->name);
+		break;
+	default:
+		__debugbreak();
+		break;
+	}
+}
+
+
+void DumpParameter(struct d3dx_parameter *param, FILE *f)
+{
+	int i;
+	struct d3dx_parameter *p;
+	switch (param->type)
+	{
+	case D3DXPT_VOID:
+		if (param->class == D3DXPC_STRUCT)
+		{
+			p = param;
+			if (param->members[0].class == D3DXPC_STRUCT)
+			{
+				p = &param->members[0];
+			}
+			fprintf(f, "struct str%s\n", p->name);
+			fprintf(f, "{\n");
+			for (i = 0; i < p->member_count; i++)
+			{
+				DumpParameter(&p->members[i], f);
+				fprintf(f, ";\n");
+			}
+			fprintf(f, "};\n");
+			fprintf(f, "str%s", p->name);
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_BOOL:
+		if (param->class == D3DXPC_SCALAR)
+		{
+			fprintf(f, "bool");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_INT:
+		switch (param->class)
+		{
+		case D3DXPC_SCALAR:
+			fprintf(f, "int");
+			break;
+		case D3DXPC_VECTOR:
+			fprintf(f, "int%d", param->columns);
+			break;
+		default:
+			__debugbreak();
+			break;
+		}
+		break;
+	case D3DXPT_FLOAT:
+		switch (param->class)
+		{
+		case D3DXPC_SCALAR:
+			fprintf(f, "float");
+			break;
+		case D3DXPC_VECTOR:
+			fprintf(f, "float%d", param->columns);
+			break;
+		case D3DXPC_MATRIX_ROWS:
+			fprintf(f, "float%dx%d", param->rows, param->columns);
+			break;
+		default:
+			__debugbreak();
+			break;
+		}
+		break;
+	case D3DXPT_STRING:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "string");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_TEXTURE:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "texture");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_SAMPLER:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "sampler");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_SAMPLER2D:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "sampler2D");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_SAMPLER3D:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "sampler3D");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_SAMPLERCUBE:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "samplerCUBE");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_VERTEXSHADER:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "vertexshader");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_PIXELSHADER:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "pixelshader");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	default:
+		__debugbreak();
+		break;
+	}
+	fprintf(f, " %s", param->name);
+	if (param->element_count)
+	{
+		fprintf(f, "[%d]", param->element_count);
+	}
+	if (param->semantic)
+	{
+		fprintf(f, " : %s", param->semantic);
+	}
+}
+
+void DumpStructParameter(struct d3dx_parameter *param, FILE *f)
+{
+	int i, j;
+	fprintf(f, "{");
+	for (i = 0; i < param->member_count; i++)
+	{
+		switch (param->members[i].type)
+		{
+		case D3DXPT_FLOAT:
+			switch (param->members[i].class)
+			{
+			case D3DXPC_SCALAR:
+				fprintf(f, "%f", *((float *)param->members[i].data));
+				break;
+			case D3DXPC_VECTOR:
+				fprintf(f, "float%d(", param->members[i].columns);
+				for (j = 0; j < param->members[i].columns; j++)
+				{
+					fprintf(f, "%f", ((float *)param->members[i].data)[j]);
+					if (j < param->members[i].columns - 1)
+					{
+						fprintf(f, ",");
+					}
+				}
+				fprintf(f, ")");
+				break;
+			case D3DXPC_MATRIX_ROWS:
+				fprintf(f, "float%dx%d(", param->members[i].rows, param->members[i].columns);
+				for (j = 0; j < param->members[i].rows * param->members[i].columns; j++)
+				{
+					fprintf(f, "%f", ((float *)param->members[i].data)[j]);
+					if (j < param->members[i].rows * param->members[i].columns - 1)
+					{
+						fprintf(f, ",");
+					}
+				}
+				fprintf(f, ")");
+				break;
+			default:
+				__debugbreak();
+				break;
+			}
+			break;
+		case D3DXPT_INT:
+			switch (param->members[i].class)
+			{
+			case D3DXPC_SCALAR:
+				fprintf(f, "%d", *((int *)param->members[i].data));
+				break;
+			default:
+				__debugbreak();
+				break;
+			}
+			break;
+		default:
+			__debugbreak();
+			break;
+		}
+		if (i < param->member_count - 1)
+		{
+			fprintf(f, ",");
+		}
+	}
+	fprintf(f, "}");
+}
+
+void DumpParameterValue(struct d3dx_parameter *param, FILE *f)
+{
+	int i;
+	struct d3dx_sampler *sampler;
+	if (param->element_count)
+	{
+		fprintf(f, "{");
+		for (i = 0; i < param->element_count; i++)
+		{
+			DumpParameterValue(&param->members[i], f);
+			if (i < param->element_count - 1)
+			{
+				fprintf(f, ",");
+			}
+			fprintf(f, "\n");
+		}
+		fprintf(f, "}");
+	}
+	else switch (param->type)
+	{
+	case D3DXPT_VOID:
+		if (param->class == D3DXPC_STRUCT)
+		{
+			DumpStructParameter(param, f);
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_BOOL:
+		if (param->class == D3DXPC_SCALAR)
+		{
+			if (*((int *)param->data) == 0)
+			{
+				fprintf(f, "false");
+			}
+			else
+			{
+				fprintf(f, "true");
+			}
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_INT:
+		switch (param->class)
+		{
+		case D3DXPC_SCALAR:
+			fprintf(f, "%d", *((int *)param->data));
+			break;
+		case D3DXPC_VECTOR:
+			fprintf(f, "int%d(", param->columns);
+			for (i = 0; i < param->columns; i++)
+			{
+				fprintf(f, "%d", ((int *)param->data)[i]);
+				if (i < param->columns - 1)
+				{
+					fprintf(f, ",");
+				}
+			}
+			fprintf(f, ")");
+			break;
+		default:
+			__debugbreak();
+			break;
+		}
+		break;
+	case D3DXPT_FLOAT:
+		switch (param->class)
+		{
+		case D3DXPC_SCALAR:
+			fprintf(f, "%f", *((float *)param->data));
+			break;
+		case D3DXPC_VECTOR:
+			fprintf(f, "float%d(", param->columns);
+			for (i = 0; i < param->columns; i++)
+			{
+				fprintf(f, "%f", ((float *)param->data)[i]);
+				if (i < param->columns - 1)
+				{
+					fprintf(f, ",");
+				}
+			}
+			fprintf(f, ")");
+			break;
+		case D3DXPC_MATRIX_ROWS:
+			fprintf(f, "float%dx%d(", param->rows, param->columns);
+			for (i = 0; i < param->rows * param->columns; i++)
+			{
+				fprintf(f, "%f", ((float *)param->data)[i]);
+				if (i < param->rows * param->columns - 1)
+				{
+					fprintf(f, ",");
+				}
+			}
+			fprintf(f, ")");
+			break;
+		default:
+			__debugbreak();
+			break;
+		}
+		break;
+	case D3DXPT_STRING:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "\"%s\"", *((const char **)param->data));
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_TEXTURE:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_SAMPLER:
+	case D3DXPT_SAMPLER2D:
+	case D3DXPT_SAMPLER3D:
+	case D3DXPT_SAMPLERCUBE:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			sampler = (struct d3dx_sampler *)param->data;
+			fprintf(f, "sampler_state\n");
+			fprintf(f, "{\n");
+			for (i = 0; i < sampler->state_count; i++)
+			{
+				DumpState(&sampler->states[i], f);
+			}
+			fprintf(f, "}");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_VERTEXSHADER:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "(unable to dump vertex shader data at this time)");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	case D3DXPT_PIXELSHADER:
+		if (param->class == D3DXPC_OBJECT)
+		{
+			fprintf(f, "(unable to dump pixel shader data at this time)");
+		}
+		else
+		{
+			__debugbreak();
+		}
+		break;
+	default:
+		__debugbreak();
+		break;
+	}
+}
+
 HRESULT WINAPI D3DXDumpEffectFileA(ID3DXEffect *effect, const char *filename)
 {
-	FIXME("(%p, %s): stub\n", effect, filename);
-
-	return D3DXERR_INVALIDDATA;
+	struct ID3DXEffectImpl *This = impl_from_ID3DXEffect(effect);
+	int i, j, k;
+	FILE *f;
+	f = fopen(filename, "wt");
+	for (i = 0; i < This->base_effect.parameter_count; i++)
+	{
+		DumpParameter(&This->base_effect.parameters[i].param, f);
+		if (This->base_effect.parameters[i].annotation_count)
+		{
+			fprintf(f, "\n<\n");
+			for (j = 0; j < This->base_effect.parameters[i].annotation_count; j++)
+			{
+				DumpParameter(&This->base_effect.parameters[i].annotations[j], f);
+				if (This->base_effect.parameters[i].annotations[j].type != D3DXPT_TEXTURE)
+				{
+					fprintf(f, " = ");
+				}
+				DumpParameterValue(&This->base_effect.parameters[i].annotations[j], f);
+				fprintf(f, ";\n");
+			}
+			fprintf(f, ">");
+		}
+		if (This->base_effect.parameters[i].param.type != D3DXPT_TEXTURE)
+		{
+			fprintf(f, " = ");
+		}
+		DumpParameterValue(&This->base_effect.parameters[i].param, f);
+		fprintf(f, ";\n");
+	}
+	for (i = 0; i < This->base_effect.technique_count; i++)
+	{
+		fprintf(f, "technique %s\n", This->base_effect.techniques[i].name);
+		if (This->base_effect.techniques[i].annotation_count)
+		{
+			fprintf(f, "<\n");
+			for (j = 0; j < This->base_effect.techniques[i].annotation_count; j++)
+			{
+				DumpParameter(&This->base_effect.techniques[i].annotations[j], f);
+				if (This->base_effect.techniques[i].annotations[j].type != D3DXPT_TEXTURE)
+				{
+					fprintf(f, " = ");
+				}
+				DumpParameterValue(&This->base_effect.techniques[i].annotations[j], f);
+				fprintf(f, ";\n");
+			}
+			fprintf(f, ">");
+		}
+		fprintf(f, "{\n");
+		for (j = 0; j < This->base_effect.techniques[i].pass_count; j++)
+		{
+			fprintf(f, "pass %s\n", This->base_effect.techniques[i].passes[j].name);
+			if (This->base_effect.techniques[i].passes[j].annotation_count)
+			{
+				fprintf(f, "<\n");
+				for (k = 0; k < This->base_effect.techniques[i].passes[j].annotation_count; k++)
+				{
+					DumpParameter(&This->base_effect.techniques[i].passes[j].annotations[k], f);
+					if (This->base_effect.techniques[i].passes[j].annotations[k].type != D3DXPT_TEXTURE)
+					{
+						fprintf(f, " = ");
+					}
+					DumpParameterValue(&This->base_effect.techniques[i].passes[j].annotations[k], f);
+					fprintf(f, ";\n");
+				}
+				fprintf(f, ">");
+			}
+			fprintf(f, "{\n");
+			for (k = 0; k < This->base_effect.techniques[i].passes[j].state_count; k++)
+			{
+				DumpState(&This->base_effect.techniques[i].passes[j].states[k], f);
+			}
+			fprintf(f, "}\n");
+		}
+		fprintf(f, "}\n");
+	}
+	fclose(f);
+	return D3D_OK;
 }
