@@ -8479,7 +8479,7 @@ void DumpState(struct d3dx_state *state, FILE *f)
 		case D3DXPT_VERTEXSHADER:
 			if (state->parameter.class == D3DXPC_OBJECT)
 			{
-				fprintf(f, "%s = (unable to dump vertex shader data at this time);\n", states[state->operation].name);
+				fprintf(f, "%s = (unable to decode vertex shader data at this time);\n", states[state->operation].name);
 			}
 			else
 			{
@@ -8489,7 +8489,7 @@ void DumpState(struct d3dx_state *state, FILE *f)
 		case D3DXPT_PIXELSHADER:
 			if (state->parameter.class == D3DXPC_OBJECT)
 			{
-				fprintf(f, "%s = (unable to dump pixel shader data at this time);\n", states[state->operation].name);
+				fprintf(f, "%s = (unable to decode pixel shader data at this time);\n", states[state->operation].name);
 			}
 			else
 			{
@@ -8581,10 +8581,10 @@ void DumpState(struct d3dx_state *state, FILE *f)
 		}
 		break;
 	case ST_FXLC:
-		fprintf(f, "%s = ( (unable to dump preshader data at this time) );\n", states[state->operation].name);
+		fprintf(f, "%s = ( (unable to decode preshader data at this time) );\n", states[state->operation].name);
 		break;
 	case ST_ARRAY_SELECTOR:
-		fprintf(f, "%s = ( %s[(unable to dump preshader data at this time)] );\n", states[state->operation].name, state->referenced_param->name);
+		fprintf(f, "%s = ( %s[(unable to decode preshader data at this time)] );\n", states[state->operation].name, state->referenced_param->name);
 		break;
 	default:
 		__debugbreak();
@@ -8757,7 +8757,6 @@ void DumpParameter(struct d3dx_parameter *param, FILE *f)
 		fprintf(f, " : %s", param->semantic);
 	}
 }
-
 void DumpStructParameter(struct d3dx_parameter *param, FILE *f)
 {
 	int i, j;
@@ -8823,7 +8822,6 @@ void DumpStructParameter(struct d3dx_parameter *param, FILE *f)
 	}
 	fprintf(f, "}");
 }
-
 void DumpParameterValue(struct d3dx_parameter *param, FILE *f)
 {
 	int i;
@@ -8972,7 +8970,7 @@ void DumpParameterValue(struct d3dx_parameter *param, FILE *f)
 	case D3DXPT_VERTEXSHADER:
 		if (param->class == D3DXPC_OBJECT)
 		{
-			fprintf(f, "(unable to dump vertex shader data at this time)");
+			fprintf(f, "(unable to decode vertex shader data at this time)");
 		}
 		else
 		{
@@ -8982,7 +8980,7 @@ void DumpParameterValue(struct d3dx_parameter *param, FILE *f)
 	case D3DXPT_PIXELSHADER:
 		if (param->class == D3DXPC_OBJECT)
 		{
-			fprintf(f, "(unable to dump pixel shader data at this time)");
+			fprintf(f, "(unable to decode pixel shader data at this time)");
 		}
 		else
 		{
