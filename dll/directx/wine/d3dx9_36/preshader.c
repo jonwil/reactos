@@ -1251,6 +1251,9 @@ HRESULT d3dx_create_param_eval(struct d3dx9_base_effect *base_effect, void *byte
     }
 
     peval = HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(*peval));
+	peval->data = HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, byte_code_size);
+	memcpy(peval->data, byte_code, byte_code_size);
+	peval->size = byte_code_size;
     if (!peval)
     {
         ret = E_OUTOFMEMORY;
@@ -1363,6 +1366,7 @@ void d3dx_free_param_eval(struct d3dx_param_eval *peval)
 
     d3dx_free_preshader(&peval->pres);
     d3dx_free_const_tab(&peval->shader_inputs);
+	HeapFree(GetProcessHeap(), 0, peval->data);
     HeapFree(GetProcessHeap(), 0, peval);
 }
 

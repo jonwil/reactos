@@ -286,6 +286,8 @@ struct d3dx_param_eval
     struct d3dx_const_tab shader_inputs;
 
     ULONG64 *version_counter;
+	void *data;
+	unsigned int size;
 };
 
 struct param_rb_entry

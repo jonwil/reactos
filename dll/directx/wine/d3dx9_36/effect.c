@@ -6282,6 +6282,7 @@ static HRESULT d3dx9_parse_resource(struct d3dx9_base_effect *base, const char *
                     state->type = ST_FXLC;
                     if (FAILED(hr = d3dx9_copy_data(base, param->object_id, ptr)))
                         return hr;
+					/////
                     if (FAILED(hr = d3dx_create_param_eval(base, object->data, object->size, param->type,
                             &param->param_eval, get_version_counter_ptr(base), NULL, 0)))
                         return hr;
@@ -8466,7 +8467,19 @@ struct State states[] =
 {"$PRESHADER_PS",NULL},
 {NULL,0},
 };
-
+const char *fname;
+int count;
+struct ID3DXEffectImpl *im;
+void DumpShader(const void *data, unsigned int size, const char *extension)
+{
+	FILE *f;
+	char s[MAX_PATH];
+	sprintf(s, "%s%d.%s", fname, count, extension);
+	count++;
+	f = fopen(s, "wb");
+	fwrite(data, 1, size, f);
+	fclose(f);
+}
 void DumpState(struct d3dx_state *state, FILE *f)
 {
 	unsigned int data;
@@ -8480,6 +8493,7 @@ void DumpState(struct d3dx_state *state, FILE *f)
 			if (state->parameter.class == D3DXPC_OBJECT)
 			{
 				fprintf(f, "%s = (unable to decode vertex shader data at this time);\n", states[state->operation].name);
+				DumpShader(im->base_effect.objects[state->parameter.object_id].data, im->base_effect.objects[state->parameter.object_id].size, "vso");
 			}
 			else
 			{
@@ -8490,6 +8504,7 @@ void DumpState(struct d3dx_state *state, FILE *f)
 			if (state->parameter.class == D3DXPC_OBJECT)
 			{
 				fprintf(f, "%s = (unable to decode pixel shader data at this time);\n", states[state->operation].name);
+				DumpShader(im->base_effect.objects[state->parameter.object_id].data, im->base_effect.objects[state->parameter.object_id].size, "pso");
 			}
 			else
 			{
@@ -8582,9 +8597,11 @@ void DumpState(struct d3dx_state *state, FILE *f)
 		break;
 	case ST_FXLC:
 		fprintf(f, "%s = ( (unable to decode preshader data at this time) );\n", states[state->operation].name);
+		DumpShader(state->parameter.param_eval->data, state->parameter.param_eval->size, "sso");
 		break;
 	case ST_ARRAY_SELECTOR:
 		fprintf(f, "%s = ( %s[(unable to decode preshader data at this time)] );\n", states[state->operation].name, state->referenced_param->name);
+		DumpShader(state->parameter.param_eval->data, state->parameter.param_eval->size, "sso");
 		break;
 	default:
 		__debugbreak();
@@ -8971,6 +8988,7 @@ void DumpParameterValue(struct d3dx_parameter *param, FILE *f)
 		if (param->class == D3DXPC_OBJECT)
 		{
 			fprintf(f, "(unable to decode vertex shader data at this time)");
+			DumpShader(im->base_effect.objects[param->object_id].data, im->base_effect.objects[param->object_id].size, "vso");
 		}
 		else
 		{
@@ -8981,6 +8999,7 @@ void DumpParameterValue(struct d3dx_parameter *param, FILE *f)
 		if (param->class == D3DXPC_OBJECT)
 		{
 			fprintf(f, "(unable to decode pixel shader data at this time)");
+			DumpShader(im->base_effect.objects[param->object_id].data, im->base_effect.objects[param->object_id].size, "pso");
 		}
 		else
 		{
@@ -8995,7 +9014,10 @@ void DumpParameterValue(struct d3dx_parameter *param, FILE *f)
 
 HRESULT WINAPI D3DXDumpEffectFileA(ID3DXEffect *effect, const char *filename)
 {
+	fname = filename;
+	count = 0;
 	struct ID3DXEffectImpl *This = impl_from_ID3DXEffect(effect);
+	im = This;
 	int i, j, k;
 	FILE *f;
 	f = fopen(filename, "wt");
